@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/illustrated", "destination": "/index.html?style=illustrated" },
+    { "source": "/pencil-sketch", "destination": "/index.html?style=pencil" }
+  ]
+}
