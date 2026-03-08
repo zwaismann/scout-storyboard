@@ -466,25 +466,63 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 768px) {
+  .board-section {
+    padding: 48px 20px 32px;
+    overflow-y: auto;
+    align-items: flex-start;
+  }
+  .title-card-section {
+    padding: 0;
+    overflow: hidden;
+    align-items: center;
+  }
+
   .board-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 20px;
+    padding-top: 8px;
   }
 
   .grid-5 {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
   .grid-5 .panel:nth-child(1) { grid-column: auto; }
   .grid-5 .panel:nth-child(2) { grid-column: auto; }
   .grid-5 .panel:nth-child(3) { grid-column: auto; }
   .grid-5 .panel:nth-child(4) { grid-column: auto; }
-  .grid-5 .panel:nth-child(5) { grid-column: 1 / -1; }
+  .grid-5 .panel:nth-child(5) { grid-column: auto; }
 
   .grid-4 {
     grid-template-columns: 1fr;
   }
 
-  .tc-campaign { font-size: clamp(24px, 5vw, 36px); }
+  .panel-frame {
+    aspect-ratio: 16 / 10;
+  }
+
+  .panel-desc {
+    font-size: 11px;
+    -webkit-line-clamp: 3;
+  }
+
+  .nav {
+    padding: 12px 16px;
+  }
+  .nav-logo {
+    font-size: 8px;
+    letter-spacing: 2.5px;
+  }
+  .nav-center {
+    font-size: 9px;
+  }
+
+  .tc-campaign { font-size: clamp(24px, 7vw, 36px); }
   .tc-divider { margin: 16px 0; }
+  .tc-brand { font-size: 9px; letter-spacing: 4px; }
+  .tc-agency { font-size: 11px; margin-top: 24px; }
+  .tc-credit { font-size: 10px; }
+
+  .section-dots { bottom: 16px; }
 }
