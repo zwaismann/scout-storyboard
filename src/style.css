@@ -465,57 +465,21 @@ img { display: block; max-width: 100%; }
   .tc-campaign { font-size: clamp(28px, 4vw, 42px); }
 }
 
+/* ============================================
+   MOBILE: Swipeable card layout
+   ============================================ */
+
 @media (max-width: 768px) {
-  .board-section {
-    padding: 48px 20px 32px;
-    overflow-y: auto;
-    align-items: flex-start;
-  }
-  .title-card-section {
-    padding: 0;
-    overflow: hidden;
-    align-items: center;
-  }
-
-  .board-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 20px;
-    padding-top: 8px;
-  }
-
-  .grid-5 {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-  .grid-5 .panel:nth-child(1) { grid-column: auto; }
-  .grid-5 .panel:nth-child(2) { grid-column: auto; }
-  .grid-5 .panel:nth-child(3) { grid-column: auto; }
-  .grid-5 .panel:nth-child(4) { grid-column: auto; }
-  .grid-5 .panel:nth-child(5) { grid-column: auto; }
-
-  .grid-4 {
-    grid-template-columns: 1fr;
-  }
-
-  .panel-frame {
-    aspect-ratio: 16 / 10;
-  }
-
-  .panel-desc {
-    font-size: 11px;
-    -webkit-line-clamp: 3;
-  }
-
   .nav {
     padding: 12px 16px;
+    background: linear-gradient(to bottom, rgba(17,35,47,0.95) 70%, transparent);
   }
   .nav-logo {
     font-size: 8px;
     letter-spacing: 2.5px;
   }
   .nav-center {
-    font-size: 9px;
+    display: none;
   }
 
   .tc-campaign { font-size: clamp(24px, 7vw, 36px); }
@@ -523,6 +487,115 @@ img { display: block; max-width: 100%; }
   .tc-brand { font-size: 9px; letter-spacing: 4px; }
   .tc-agency { font-size: 11px; margin-top: 24px; }
   .tc-credit { font-size: 10px; }
+}
 
-  .section-dots { bottom: 16px; }
+/* Mobile scroll container */
+.mobile-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  scrollbar-width: none;
+}
+
+.mobile-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual cards */
+.mobile-card {
+  flex-shrink: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px 48px;
+  background: var(--bg-boards);
+}
+
+.mobile-title-card {
+  background: var(--bg-deep);
+  padding: 0;
+}
+
+.mobile-title-card .title-card-text {
+  padding: 0 24px;
+}
+
+/* Panel frame inside mobile card */
+.mobile-card .panel-frame {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--panel-radius);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  cursor: pointer;
+}
+
+.mobile-card .panel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption below frame */
+.mobile-card .panel-caption {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 16px 4px 0;
+  max-width: 500px;
+  width: 100%;
+}
+
+.mobile-card .panel-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--accent);
+  opacity: 0.7;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.mobile-card .panel-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-dim);
+  line-height: 1.65;
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+/* Shot counter */
+.mobile-counter {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Hide desktop elements on mobile */
+.is-mobile .section-dots {
+  display: none !important;
 }
