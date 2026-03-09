@@ -525,6 +525,7 @@ img { display: block; max-width: 100%; }
 .mobile-title-card {
   background: var(--bg-deep);
   padding: 0;
+  position: relative;
 }
 
 .mobile-title-card .title-card-text {
@@ -535,7 +536,7 @@ img { display: block; max-width: 100%; }
 .mobile-card .panel-frame {
   width: 100%;
   max-width: 500px;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   border-radius: var(--panel-radius);
   overflow: hidden;
   background: var(--surface);
@@ -593,6 +594,39 @@ img { display: block; max-width: 100%; }
   color: var(--text-muted);
   z-index: 100;
   pointer-events: none;
+}
+
+/* Swipe hint on title card */
+.mobile-swipe-hint {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0;
+  animation: hintFade 3s ease 1.8s forwards;
+}
+
+.mobile-swipe-hint svg {
+  animation: hintSlide 1.5s ease-in-out 2.2s infinite;
+}
+
+@keyframes hintFade {
+  0% { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes hintSlide {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
 }
 
 /* Hide desktop elements on mobile */

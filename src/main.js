@@ -87,6 +87,13 @@ function initMobile() {
   const titleSlide = document.createElement('div');
   titleSlide.className = 'mobile-card mobile-title-card';
   titleSlide.innerHTML = titleCard.querySelector('.title-card-inner').innerHTML;
+
+  // Add swipe hint
+  const hint = document.createElement('div');
+  hint.className = 'mobile-swipe-hint';
+  hint.innerHTML = `Swipe <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+  titleSlide.appendChild(hint);
+
   mobileScroll.appendChild(titleSlide);
 
   // All panels as individual cards
