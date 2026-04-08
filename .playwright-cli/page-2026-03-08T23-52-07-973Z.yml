@@ -1,0 +1,96 @@
+- generic [active] [ref=e1]:
+  - navigation:
+    - generic: SCOUT MOTORS
+  - generic [ref=e5]:
+    - generic [ref=e8]:
+      - paragraph [ref=e9]: Scout Motors
+      - heading "\"Short History of America\"" [level=1] [ref=e10]:
+        - text: "\"Short History"
+        - text: of America"
+      - paragraph [ref=e11]: VBP
+      - paragraph [ref=e12]:
+        - text: Live action storyboards by
+        - text: Ze'ev Waismann & Electra Filmworks
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - img "Shot 1" [ref=e17] [cursor=pointer]
+        - generic [ref=e18]:
+          - generic [ref=e19]: "01"
+          - paragraph [ref=e20]: Inside the garage, looking toward the open door. The Traveler faces the morning light. The father prepares the gear while the daughter heads to the car. The journey begins.
+      - generic [ref=e21]:
+        - img "Shot 2" [ref=e23] [cursor=pointer]
+        - generic [ref=e24]:
+          - generic [ref=e25]: "02"
+          - paragraph [ref=e26]: His hand unplugs the EV charger. Backlit and deliberate. A quiet domestic ritual before hitting the road.
+      - generic [ref=e27]:
+        - img "Shot 3" [ref=e29] [cursor=pointer]
+        - generic [ref=e30]:
+          - generic [ref=e31]: "03"
+          - paragraph [ref=e32]: The daughter in the passenger seat, chin tilted toward the glass. The landscape blurs past and she's already somewhere else. Our first real look at her.
+      - generic [ref=e33]:
+        - img "Shot 4" [ref=e35] [cursor=pointer]
+        - generic [ref=e36]:
+          - generic [ref=e37]: "04"
+          - paragraph [ref=e38]: Father and daughter framed from the center console. A shared silence. The road unspools on the navigation screen between them.
+      - generic [ref=e39]:
+        - img "Shot 5" [ref=e41] [cursor=pointer]
+        - generic [ref=e42]:
+          - generic [ref=e43]: "05"
+          - paragraph [ref=e44]: The Traveler idles at a weathered gas station, alone in a vast golden landscape. Old world meets new.
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - img "Shot 6" [ref=e49] [cursor=pointer]
+        - generic [ref=e50]:
+          - generic [ref=e51]: "06"
+          - paragraph [ref=e52]: His hand on the old gas pump, a familiar gesture. The same motion as the charger at home - only the world around him has changed.
+      - generic [ref=e53]:
+        - img "Shot 7" [ref=e55] [cursor=pointer]
+        - generic [ref=e56]:
+          - generic [ref=e57]: "07"
+          - paragraph [ref=e58]: The Traveler speeding across an open dirt trail, kicking up dust through the golden hills. The vehicle in its element.
+      - generic [ref=e59]:
+        - img "Shot 8" [ref=e61] [cursor=pointer]
+        - generic [ref=e62]:
+          - generic [ref=e63]: "08"
+          - paragraph [ref=e64]: Low angle as the Traveler crests a ridge, dirt falling away beneath it. Built for exactly this.
+      - generic [ref=e65]:
+        - img "Shot 9" [ref=e67] [cursor=pointer]
+        - generic [ref=e68]:
+          - generic [ref=e69]: "09"
+          - paragraph [ref=e70]: Inside the cabin. She's laughing now, bracing against the door. He catches it in the corner of his eye and grins.
+      - generic [ref=e71]:
+        - img "Shot 10" [ref=e73] [cursor=pointer]
+        - generic [ref=e74]:
+          - generic [ref=e75]: "10"
+          - paragraph [ref=e76]: The Traveler at rest on an uneven dirt trail, the desert stretching out in every direction. Nowhere to be but here.
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - img "Shot 11" [ref=e81] [cursor=pointer]
+        - generic [ref=e82]:
+          - generic [ref=e83]: "11"
+          - paragraph [ref=e84]: A breathtaking vista. Father and daughter standing beside the parked Traveler, gazing out over a massive, rolling valley bathed in late afternoon light.
+      - generic [ref=e85]:
+        - img "Shot 12" [ref=e87] [cursor=pointer]
+        - generic [ref=e88]:
+          - generic [ref=e89]: "12"
+          - paragraph [ref=e90]: Close on her face against the sunset. Wind in her hair. She's seeing something for the first time and she knows it.
+      - generic [ref=e91]:
+        - img "Shot 13" [ref=e93] [cursor=pointer]
+        - generic [ref=e94]:
+          - generic [ref=e95]: "13"
+          - paragraph [ref=e96]: Close on the father. He's not looking at the view. He's watching her. This was the whole point.
+      - generic [ref=e97]:
+        - img "Shot 14" [ref=e99] [cursor=pointer]
+        - generic [ref=e100]:
+          - generic [ref=e101]: "14"
+          - paragraph [ref=e102]: Aerial pullback. The Traveler traces a switchback road as the last light goes. They'll remember this one.
+  - generic [ref=e103]:
+    - button "Title" [ref=e104] [cursor=pointer]
+    - button "Shots 1-5" [ref=e105] [cursor=pointer]
+    - button "Shots 6-10" [ref=e106] [cursor=pointer]
+    - button "Shots 11-14" [ref=e107] [cursor=pointer]
+  - generic:
+    - generic:
+      - button "Close":
+        - img
+      - paragraph

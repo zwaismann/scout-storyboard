@@ -100,7 +100,7 @@ function initMobile() {
   const panels = document.querySelectorAll('.panel');
   const totalCards = panels.length + 1; // +1 for title
 
-  panels.forEach((panel, i) => {
+  panels.forEach((panel) => {
     const card = document.createElement('div');
     card.className = 'mobile-card';
     card.dataset.shot = panel.dataset.shot;
@@ -126,9 +126,12 @@ function initMobile() {
   counter.textContent = '';
   document.body.appendChild(counter);
 
-  // Track scroll position
+  // Track scroll position with rAF throttle for smoothness
   let currentIndex = 0;
+  let rafId = null;
+
   function updateCounter() {
+    rafId = null;
     const scrollLeft = mobileScroll.scrollLeft;
     const cardWidth = mobileScroll.offsetWidth;
     const index = Math.round(scrollLeft / cardWidth);
@@ -151,11 +154,22 @@ function initMobile() {
     progressBar.style.width = (progress * 100) + '%';
   }
 
-  mobileScroll.addEventListener('scroll', updateCounter, { passive: true });
+  mobileScroll.addEventListener('scroll', () => {
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateCounter);
+    }
+  }, { passive: true });
 
-  // Make panels visible (they start with opacity: 0 for desktop animation)
+  // Make panels and captions visible (they start with opacity: 0 for desktop animation)
   mobileScroll.querySelectorAll('.panel-caption').forEach(c => {
     c.style.opacity = '1';
+  });
+  mobileScroll.querySelectorAll('.panel-frame').forEach(f => {
+    f.style.opacity = '1';
+  });
+  // Also ensure any mobile cards with panels inherit visible state
+  mobileScroll.querySelectorAll('.mobile-card').forEach(card => {
+    card.style.opacity = '1';
   });
 
   // Init modal for mobile cards
@@ -230,29 +244,31 @@ function initStoryboard() {
   dotsContainer.classList.add('visible');
 
   let currentSection = -1;
+  let isSnapping = false;
 
   function revealSection(index) {
     if (index === currentSection) return;
 
-    // Fade out old section panels
+    // Fade out old section panels quickly
     if (currentSection >= 0 && currentSection !== index) {
       const oldPanels = sections[currentSection].querySelectorAll('.panel');
       if (oldPanels.length) {
         gsap.to(oldPanels, {
           opacity: 0,
-          y: -20,
-          scale: 0.96,
-          duration: 0.35,
+          y: -15,
+          duration: 0.25,
           ease: 'power2.in',
-          stagger: { each: 0.03, from: 'end' },
+          stagger: { each: 0.02, from: 'end' },
+          overwrite: true,
         });
       }
       const oldCaptions = sections[currentSection].querySelectorAll('.panel-caption');
       if (oldCaptions.length) {
         gsap.to(oldCaptions, {
           opacity: 0,
-          duration: 0.2,
+          duration: 0.15,
           ease: 'power1.in',
+          overwrite: true,
         });
       }
     }
@@ -267,31 +283,29 @@ function initStoryboard() {
 
     const panels = sections[index].querySelectorAll('.panel');
     if (panels.length) {
-      gsap.killTweensOf(panels);
-
       gsap.fromTo(panels,
-        { opacity: 0, y: 40, scale: 0.94 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power3.out',
-          stagger: { each: 0.08, from: 'start' },
+          stagger: { each: 0.06, from: 'start' },
+          overwrite: true,
         }
       );
 
       const captions = sections[index].querySelectorAll('.panel-caption');
-      gsap.killTweensOf(captions);
       gsap.fromTo(captions,
-        { opacity: 0, y: 8 },
+        { opacity: 0, y: 6 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.5,
+          duration: 0.4,
           ease: 'power2.out',
-          stagger: { each: 0.08, from: 'start' },
-          delay: 0.25,
+          stagger: { each: 0.06, from: 'start' },
+          delay: 0.2,
+          overwrite: true,
         }
       );
 
@@ -300,10 +314,11 @@ function initStoryboard() {
         { borderColor: 'rgba(212, 146, 90, 0.2)' },
         {
           borderColor: 'rgba(255, 255, 255, 0.08)',
-          duration: 1.2,
+          duration: 1.0,
           ease: 'power1.out',
-          stagger: { each: 0.08 },
+          stagger: { each: 0.06 },
           delay: 0.1,
+          overwrite: 'auto',
         }
       );
     }
@@ -336,17 +351,16 @@ function initStoryboard() {
     scrollTrigger: {
       trigger: wrapper,
       start: 'top top',
-      end: () => '+=' + (totalSections * window.innerHeight * 1.2),
+      end: () => '+=' + (totalSections * window.innerHeight),
       pin: true,
-      scrub: 1.2,
+      scrub: 0.8,
       anticipatePin: 1,
       invalidateOnRefresh: true,
       snap: {
         snapTo: 1 / (totalSections - 1),
-        duration: { min: 0.3, max: 0.6 },
-        delay: 0.05,
+        duration: { min: 0.25, max: 0.8 },
+        delay: 0,
         ease: 'power2.inOut',
-        inertia: false,
       },
       onUpdate: (self) => {
         progressBar.style.width = (self.progress * 100) + '%';
@@ -356,6 +370,7 @@ function initStoryboard() {
     },
   });
 
+  // Dot navigation with smooth scroll
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const idx = parseInt(dot.dataset.index);
@@ -364,6 +379,32 @@ function initStoryboard() {
       const targetScroll = st.start + sectionProgress * (st.end - st.start);
       gsap.to(window, { scrollTo: targetScroll, duration: 0.8, ease: 'power2.inOut' });
     });
+  });
+
+  // Keyboard navigation for accessibility
+  document.addEventListener('keydown', (e) => {
+    const overlay = document.getElementById('modalOverlay');
+    if (overlay.classList.contains('open')) return;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIdx = Math.min(currentSection + 1, totalSections - 1);
+      if (nextIdx !== currentSection) {
+        const st = scrollTween.scrollTrigger;
+        const sectionProgress = nextIdx / (totalSections - 1);
+        const targetScroll = st.start + sectionProgress * (st.end - st.start);
+        gsap.to(window, { scrollTo: targetScroll, duration: 0.6, ease: 'power2.inOut' });
+      }
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIdx = Math.max(currentSection - 1, 0);
+      if (prevIdx !== currentSection) {
+        const st = scrollTween.scrollTrigger;
+        const sectionProgress = prevIdx / (totalSections - 1);
+        const targetScroll = st.start + sectionProgress * (st.end - st.start);
+        gsap.to(window, { scrollTo: targetScroll, duration: 0.6, ease: 'power2.inOut' });
+      }
+    }
   });
 
   revealSection(0);
@@ -379,6 +420,9 @@ function initModal() {
   const modalDesc = document.getElementById('modalDesc');
   const modalClose = document.getElementById('modalClose');
 
+  // Store scroll position to prevent jump on modal close
+  let savedScrollY = 0;
+
   function openModal(panel) {
     const img = panel.querySelector('.panel-img');
     const desc = panel.querySelector('.panel-desc');
@@ -387,8 +431,12 @@ function initModal() {
     modalImg.src = img.src;
     modalShotNum.textContent = shotNum ? shotNum.padStart(2, '0') : '';
     modalDesc.textContent = desc ? desc.textContent : '';
+
+    savedScrollY = window.scrollY;
     overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.width = '100%';
 
     gsap.fromTo(modal,
       { y: 30, scale: 0.95, opacity: 0 },
@@ -401,7 +449,10 @@ function initModal() {
       y: 20, scale: 0.97, opacity: 0, duration: 0.25, ease: 'power2.in',
       onComplete: () => {
         overlay.classList.remove('open');
-        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, savedScrollY);
       },
     });
   }
